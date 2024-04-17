@@ -1,0 +1,66 @@
+php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateBooksTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('books', function (Blueprint $table) {
+            $table->id();
+            $table->string('isbn');
+            $table->string('title');
+            $table->string('author');
+            $table->text('description')->nullable();
+            $table->date('date_published');
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('books');
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    @yield('content')
+</body>
+</html>
+@extends('layouts.app')
+
+@section('content')
+<div class="container mx-auto py-8">
+    <h1 class="text-4xl font-bold mb-4">Books</h1>
+    <table class="w-full table-auto">
+        <thead>
+            <tr>
+                <th class="px-4 py-2">ISBN</th>
+                <th class="px-4 py-2">Title</th>
+                <th class="px-4 py-2">Author</th>
+                <th class="px-4 py-2">Description</th>
+                <th class="px-4 py-2">Date Published</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($books as $book)
+            <tr>
+                <td class="border px-4 py-2">{{ $book->isbn }}</td>
+                <td class="border px-4 py-2">{{ $book->title }}</td>
+                <td class="border px-4 py-2">{{ $book->author }}</td>
+                <td class="border px-4 py-2">{{ $book->description }}</td>
+                <td class="border px-4 py-2">{{ $book->date_published }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@endsection
